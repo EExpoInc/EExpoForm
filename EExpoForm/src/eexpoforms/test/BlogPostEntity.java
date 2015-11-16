@@ -16,9 +16,10 @@ public class BlogPostEntity {
 	public Date createDate;
 	public String author;
 	
-	public Status status;
+	public Status meuStatus;
 	public List<Integer> catList;
 	public List<String> tagList;
+	public boolean archived;
 	
 
 }

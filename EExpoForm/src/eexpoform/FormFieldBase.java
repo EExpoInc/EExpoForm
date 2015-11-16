@@ -1,7 +1,6 @@
-package eexpoforms;
+package eexpoform;
 
-import java.util.Arrays;
-import java.util.List;
+import java.lang.reflect.Field;
 
 
 /***
@@ -17,6 +16,7 @@ import java.util.List;
  * - uso de um BeanForm extends Bean <br>
  * - Map<K,V> p mostrar label e marcar o valor em bg <br>
  * - List<V> qdo o label for igual valor <br>
+ * - @valueDefault @hint @label @order @autocomplete @autofocus @disable @readonly <br>
  * - enum p conjunto <br>
  * - annotations p definir qual <br> 
  * 		eh o conjunto possivel de um campo <br>
@@ -29,7 +29,7 @@ import java.util.List;
  * - 20151112.1517.123456789
  * 
  * MVP 1.0:
- * - Valores unitario como texto, check (sem mascara de in out)
+ * - Valores unitario como texto, check (sem mascara de in out), password, hint
  * - Unidade de conjunto fechado (enum) ou aberto (myFieldAll() ou annotation) sera mostrado 
  * 			como radio (ate 10 elem), ou combobox
  * - Subconjunto sera mostrado uma lista de checkbox (http://stackoverflow.com/a/12586084/260925)
@@ -48,39 +48,43 @@ public class FormFieldBase {
 	}
 	
 	public enum FormInputAspect{
-		hidden, disable, normal
+		hidden, readonly, normal
 	}
 	
 	public enum FormInputDisplay{
 		text, textarea, radio, check, password, file  
 	}
 	
-	
-	public String id;
+	//ex.: /resource/myImgRender.jsp
+	protected String jspPathRender; 
+	public static final int MIN_TO_COMBO = 5;
+	public Field originalBeanField;
+	protected String id;
+	public String name;
 	public FormInputType inputType;
 	public String label;
 	public String errMsg;
 	public String hint;
+
 	
-	private List<String> values; 
-	public List<String> allPossibleValues;
+//	private List<String> values; 
+//	public List<String> allPossibleValues;
 	public String inputPattern;
 	public String outputPattern;
 	private FormFieldCustomRender ffcr;
 	
+	public FormFieldBase(Field originalBeanField) {
+		this.originalBeanField = originalBeanField;
+	}
+	
+	public String id(){
+		if(id != null){
+			int r = (int) (Math.random()*10000);
+			this.id = "eexpofield_"+r;
+		}
+		return this.id;
+	}
 	 
-	public FormFieldBase values(String... values){
-		this.values = Arrays.asList(values);
-		return this;
-	}
-	public String value(){
-		return this.values.get(0);
-	}
-	
-	public List<String> values(){
-		return this.values;
-	}
-	
 	
 	public FormFieldBase FormFieldCustomRender(FormFieldCustomRender ffcr){
 		this.ffcr = ffcr;
