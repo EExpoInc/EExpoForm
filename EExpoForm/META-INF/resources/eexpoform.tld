@@ -4,13 +4,19 @@
 	version="2.1">
 	<tlib-version>2.1</tlib-version>
 	
-	<short-name>eexpoform</short-name>
+	<short-name>ex</short-name>
 	<uri>http://eexponews.com/eexpoform</uri>
 
 	<tag-file>
 		<name>inputText</name>
 		<path>/META-INF/tags/inputText.tag</path>
 	</tag-file>
+
+	<tag-file>
+		<name>formBase</name>
+		<path>/META-INF/tags/formBase.tag</path>
+	</tag-file>
+
 	<tag-file>
 		<name>checkGroup</name>
 		<path>/META-INF/tags/checkGroup.tag</path>

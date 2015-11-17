@@ -16,19 +16,9 @@ public class Main {
 	
 	public static void main(String[] args) {
 //		BlogPostForm bpf = new BlogPostForm() {
-		BlogPostEntity bpf = new BlogPostForm() {
-			{
-				this.id = 10;
-				this.author = "joao";
-				this.content = "Meu conteudo "+id;
-				this.archived = true;
-				this.meuStatus = Status.deleted;
-				this.catList = Arrays.asList(1, 2);
-				this.tagList = Arrays.asList("tag-1", "tag-2");
-			}
-		};
+		BlogPostEntity bpf = genEntity();
 		
-		FormBuilder fb = new FormBuilder();
+		FormBuilder<BlogPostEntity> fb = new FormBuilder<BlogPostEntity>();
 		List<FormFieldBase> ffbs = fb.createForm(bpf).fieldList;
 		for (FormFieldBase ffb : ffbs) {
 //			getValue(ffb);
@@ -40,6 +30,20 @@ public class Main {
 		
 	}
 
+	
+	public static BlogPostEntity genEntity(){
+		return new BlogPostForm() {
+			{
+				this.id = 10;
+				this.authorId = 2;
+				this.content = "Meu conteudo "+id;
+				this.archived = true;
+				this.meuStatus = Status.published;
+				this.catList = Arrays.asList(1, 2,7);
+				this.tagList = Arrays.asList("tag-1", "tag-5");
+			}
+		};
+	}
 	private static String getValue(FormFieldBase ffb) {
 		Object _result="";
 		if(OpenValueField.class.isInstance(ffb)){
@@ -66,7 +70,7 @@ public class Main {
 	
 	
 	private static String getValuesAll(FormFieldBase ffb) {
-		Map<String, String>  _result = null;
+		Map<Object, String>  _result = null;
 		if(MultiValueField.class.isInstance(ffb)){
 			_result = ((MultiValueField) ffb).allValuesMap;
 		}

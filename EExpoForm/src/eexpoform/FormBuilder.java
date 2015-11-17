@@ -16,10 +16,10 @@ import eexpoform.field.MultiValueField;
 import eexpoform.field.OpenMultiValueField;
 import eexpoform.field.OpenValueField;
 
-public class FormBuilder {
+public class FormBuilder <E>{
 	
 	
-	public <E> FormBase createForm(E entity){
+	public  FormBase createForm(E entity){
 		List<FormFieldBase> formFieldList= new ArrayList<>();
 		Field[] fields = entity.getClass().getFields();
 		for (Field f : fields) {
@@ -40,11 +40,11 @@ public class FormBuilder {
 //		return formFieldList;		
 //	}
 	
-	public FormFieldBase buildField(Field f, Object obj){
+	public FormFieldBase buildField(Field f, E entity){
 //		FormFieldBase result = new FormFieldBase(f);
 		f.setAccessible(true); 
 		
-		FormFieldBase result = resolveFieldType(f, obj);
+		FormFieldBase result = resolveFieldType(f, entity);
 		result.label = resolveLabel(f);
 		
 		return result;
@@ -52,16 +52,16 @@ public class FormBuilder {
 	
 
 	@SuppressWarnings("unchecked")
-	private LinkedHashMap<String, String> resolveAllValues(Field f, Object obj) {
+	private LinkedHashMap<Object, String> resolveAllValues(Field f, E entity) {
 		String allValuesMethodName = f.getName()+"All";
 		Method allValuesMethod;
-		LinkedHashMap<String, String> result;
+		LinkedHashMap<Object, String> result;
 		try { 
-			allValuesMethod = obj.getClass().getMethod(allValuesMethodName);
+			allValuesMethod = entity.getClass().getMethod(allValuesMethodName);
 			if(allValuesMethod!= null){
-				Object _return = allValuesMethod.invoke(obj, (Object[])null);
+				Object _return = allValuesMethod.invoke(entity, (Object[])null);
 				if(_return instanceof Map){
-					result = (LinkedHashMap<String,String>) _return;
+					result = (LinkedHashMap<Object,String>) _return;
 					return result;	
 				}else if(_return instanceof List){
 					List<String> allValuesList = (List<String>) _return;
@@ -82,10 +82,10 @@ public class FormBuilder {
 		if(f.getType().isEnum()){
 			Class<?> c = f.getType();
 			Object[] enums = c.getEnumConstants();
-			result = new LinkedHashMap<String, String>();
+			result = new LinkedHashMap<Object, String>();
 			for (Object o : enums) {
 				Enum<?> e = (Enum<?>) o;
-				result.put(e.toString(), e.name());
+				result.put(e, e.name());
 			}
 			return result;
 		}
@@ -94,46 +94,46 @@ public class FormBuilder {
 		
 	}
 
-	private FormFieldBase resolveFieldType(Field f, Object obj) {
+	private FormFieldBase resolveFieldType(Field f, E entity) {
 		FormFieldBase result;
-		List<String> selectedValues = this.resolveSeletedValues(f, obj);
 		
-		if(Collection.class.isAssignableFrom(f.getType())){
-//		if(f.getType().isAssignableFrom(Collection.class)){
-			LinkedHashMap<String, String> allValues =  this.resolveAllValues(f, obj);			
-			if(allValues != null){				
+		List<Object> selectedValues = this.resolveSeletedValues(f, entity);
+		LinkedHashMap<Object, String> allValues =  this.resolveAllValues(f, entity);
+		if ((allValues != null)) {
+			if(Collection.class.isAssignableFrom(f.getType())){				
 				result = new MultiValueField(f, allValues, selectedValues);	
-			}else {
-				result = new OpenMultiValueField(f, selectedValues); 
+			} else if(f.getType().isEnum()){ 
+				result = new ChooseOneValueField(f, allValues, resolveOneValue(selectedValues));
+			} else {
+				result = new ChooseOneValueField(f, allValues, resolveOneValue(selectedValues)); 
 			}
-			
-		}else if(f.getType().isEnum()){ 
-			LinkedHashMap<String, String> allValues =  this.resolveAllValues(f, obj);
-			result = new ChooseOneValueField(f, allValues, resolveOneValue(selectedValues));
 		}else {
 			Class<?> c = CrudfyUtils.isSupportedClass(f.getType());
-			if(c.equals(Boolean.class)){
+			if(Collection.class.isAssignableFrom(f.getType())){
+				result = new OpenMultiValueField(f, selectedValues);
+			}else if(c.equals(Boolean.class)){
 				result = new BooleanValueField(f, resolveBooleanValue(selectedValues));
 			}else{ 
 				result = new OpenValueField(f, resolveOneValue(selectedValues));
 			}
 		}
+		result.name = f.getName();
 		return result;
 	}
 	
 	
-	private List<String> resolveSeletedValues(Field f, Object obj) {
-		List<String> result = new ArrayList<>();
+	private List<Object> resolveSeletedValues(Field f, E entity) {
+		List<Object> result = new ArrayList<>();
 		try {
-			Object value = f.get(obj);
+			Object value = f.get(entity);
 			if(value instanceof Collection<?>){
 				Collection<?> coll = (Collection<?>) value;
-				for (Object o : coll) {
-					 result.add(o.toString());
+				for (Object item : coll) {
+					 result.add(item);
 				}
 			}else{
 				if(value != null){
-					result.add(value.toString());	
+					result.add(value);	
 				}
 				
 			}
@@ -147,17 +147,18 @@ public class FormBuilder {
 //	private List<String> resolveMultipleValues(Field f, Object obj) {
 //		
 //	}
-	private String resolveOneValue(List<String> selectedValues) {
+	private Object resolveOneValue(List<Object> selectedValues) {
 		if(selectedValues.size() == 1){
 			return selectedValues.get(0);
 		}
 		return null;
 	}
 	
-	private boolean resolveBooleanValue(List<String> selectedValues) {
-		String s = resolveOneValue(selectedValues);
+	private boolean resolveBooleanValue(List<Object> selectedValues) {
+		Object s = resolveOneValue(selectedValues);
 		if(s != null){
-			return Boolean.parseBoolean(s);
+//			System.out.println(s);
+			return Boolean.parseBoolean(s.toString()+"");
 		}else{
 			return false;
 		}

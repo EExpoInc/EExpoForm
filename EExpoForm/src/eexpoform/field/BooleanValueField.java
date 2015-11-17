@@ -9,8 +9,9 @@ public class BooleanValueField extends FormFieldBase{
 
 	public boolean value = false;
 	
-	public BooleanValueField(Field originalBeanField, boolean SelectedValues) {
+	public BooleanValueField(Field originalBeanField, boolean selectedValue) {
 		super(originalBeanField);
+		this.value = selectedValue;
 	}
 
 

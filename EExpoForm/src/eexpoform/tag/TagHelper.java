@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import eexpoform.FormBase;
+import eexpoform.FormBuilder;
 import eexpoform.FormFieldBase;
 import eexpoform.field.BooleanValueField;
 import eexpoform.field.ChooseOneValueField;
@@ -14,16 +15,21 @@ public class TagHelper {
 	HttpServletRequest req;
 	HttpServletResponse resp;
 	FormBase formBase;
+	Object bean;
 	int fieldIdx = 0;
 	
 	public enum OutputTag {
 		check, checkOne, combo, inputText, radio
 	}
 	
-	public TagHelper(FormBase formBase, HttpServletRequest req, HttpServletResponse resp) {
-		this.formBase = formBase;
+	public TagHelper(Object bean, HttpServletRequest req, HttpServletResponse resp) {		
+		this.formBase = (new FormBuilder<Object>()).createForm(bean);
 		this.req = req;
 		this.resp = resp;
+	}
+	
+	public FormBase formBase(){
+		return this.formBase;
 	}
 	
 	public boolean hasNextField() {

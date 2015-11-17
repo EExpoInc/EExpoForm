@@ -19,10 +19,20 @@ public class BlogPostForm extends BlogPostEntity {
 	public List<String> tagListAll(){
 		
 		List<String>  result = new ArrayList<>();
-		for(int i=1; i<9; i++){
-			result.add("tag "+i);
+		for(int i=1; i<5; i++){
+			result.add("tag-"+i);
 		}		
 		return result;
+	}
+	
+	public Map<Integer,String> authorIdAll(){
+		LinkedHashMap<Integer, String> value_labelMap = new LinkedHashMap<>();
+		for(int i=0; i<15; i++){
+			value_labelMap.put(i, "Author "+i);
+		}		
+		return value_labelMap;
+
+		
 	}
 	
 	

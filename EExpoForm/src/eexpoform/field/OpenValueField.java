@@ -6,7 +6,7 @@ import java.util.Arrays;
 //input type text ou textarea
 public class OpenValueField extends OpenMultiValueField{
 
-	public OpenValueField(Field originalBeanField, String selectedValue) {
+	public OpenValueField(Field originalBeanField, Object selectedValue) {
 		super(originalBeanField, Arrays.asList(selectedValue));
 	}
 	
@@ -14,7 +14,7 @@ public class OpenValueField extends OpenMultiValueField{
 		if(this.selectedValues.get(0) == null){
 			return "";
 		}else{
-			return this.selectedValues.get(0).trim();	
+			return this.selectedValues.get(0).toString().trim();	
 		}
 		
 	}

@@ -3,6 +3,7 @@
 	<name>EExpoForm</name>
 	<comment></comment>
 	<projects>
+		<project>EExpoCrud-Commons</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

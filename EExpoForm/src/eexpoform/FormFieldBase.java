@@ -2,6 +2,8 @@ package eexpoform;
 
 import java.lang.reflect.Field;
 
+import eexpocrud.CrudfyUtils;
+
 
 /***
  * {@link http://www.w3schools.com/tags/tag_input.asp}
@@ -78,9 +80,9 @@ public class FormFieldBase {
 	}
 	
 	public String id(){
-		if(id != null){
-			int r = (int) (Math.random()*10000);
-			this.id = "eexpofield_"+r;
+		if(id == null){
+			int r = (int) (Math.random()*100);
+			this.id = "eexpofield_"+ CrudfyUtils.urlfy(label) + "-"+r;
 		}
 		return this.id;
 	}

@@ -8,11 +8,11 @@ import java.util.LinkedHashMap;
 public class ChooseOneValueField extends MultiValueField{
 
 	
-	public ChooseOneValueField(Field originalBeanField, LinkedHashMap<String, String> allValuesMap, String selectedValue) {
+	public ChooseOneValueField(Field originalBeanField, LinkedHashMap<Object, String> allValuesMap, Object selectedValue) {
 		super(originalBeanField, allValuesMap, Arrays.asList(selectedValue));
 	}
 	
-	public String selectedValue(){
+	public Object selectedValue(){
 		
 		return this.selectedValues.get(0);
 	}

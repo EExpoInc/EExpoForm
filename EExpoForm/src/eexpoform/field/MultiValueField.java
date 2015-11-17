@@ -12,18 +12,18 @@ public class MultiValueField extends FormFieldBase {
 //		String value, label;
 //	}
 	
-	protected List<String> selectedValues;
+	protected List<Object> selectedValues;
 //	protected Set<SimpleValueLabel> allValueLabelSet;
-	public Map<String, String> allValuesMap;
+	public Map<Object, String> allValuesMap;
 	
-	public MultiValueField(Field originalBeanField, LinkedHashMap<String, String> allValuesMap, List<String> selectedValues) {
+	public MultiValueField(Field originalBeanField, LinkedHashMap<Object, String> allValuesMap, List<Object> selectedValues) {
 		super(originalBeanField);
 		this.selectedValues = selectedValues;
 		this.allValuesMap = allValuesMap;
 	}
 	
 	
-	public List<String>  selectedValues(){
+	public List<Object>  selectedValues(){
 		return selectedValues;
 	}
 	

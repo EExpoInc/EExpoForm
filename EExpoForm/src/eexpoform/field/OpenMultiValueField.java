@@ -9,12 +9,12 @@ import eexpoform.FormFieldBase;
 public class OpenMultiValueField extends FormFieldBase{
 
 	
-	protected List<String> selectedValues;
-	public OpenMultiValueField(Field originalBeanField, List<String> selectedValues) {
+	protected List<Object> selectedValues;
+	public OpenMultiValueField(Field originalBeanField, List<Object> selectedValues) {
 		super(originalBeanField);
 		this.selectedValues = selectedValues;
 	}
-	public List<String> selectedValues(){
+	public List<Object> selectedValues(){
 		return this.selectedValues;
 	}
 	

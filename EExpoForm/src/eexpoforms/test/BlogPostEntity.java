@@ -14,12 +14,14 @@ public class BlogPostEntity {
 	public String title;
 	public String content;
 	public Date createDate;
-	public String author;
+	public Integer authorId;
 	
 	public Status meuStatus;
 	public List<Integer> catList;
 	public List<String> tagList;
 	public boolean archived;
+	
+	
 	
 
 }
