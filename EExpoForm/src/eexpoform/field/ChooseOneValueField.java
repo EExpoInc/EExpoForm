@@ -13,8 +13,12 @@ public class ChooseOneValueField extends MultiValueField{
 	}
 	
 	public Object selectedValue(){
-		
-		return this.selectedValues.get(0);
+		Object obj = this.selectedValues.get(0);
+		if(obj == null){
+			obj = "NO_OBJECT_TO_SE_HERE_"+Math.random();
+		}
+//		return this.selectedValues.get(0);
+		return obj;
 	}
 	
 	

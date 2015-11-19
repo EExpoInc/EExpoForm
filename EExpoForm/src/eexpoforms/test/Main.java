@@ -38,7 +38,7 @@ public class Main {
 				this.authorId = 2;
 				this.content = "Meu conteudo "+id;
 				this.archived = true;
-				this.meuStatus = Status.published;
+//				this.meuStatus = Status.published;
 				this.catList = Arrays.asList(1, 2,7);
 				this.tagList = Arrays.asList("tag-1", "tag-5");
 			}

@@ -10,6 +10,7 @@
 
 <%
 Object entity = request.getAttribute("entity");
+
 if(entity == null){
 	entity = Main.genEntity();	
 }%>
