@@ -15,7 +15,7 @@
 %>
 		<div class="checkbox">
 			<label><input type="checkbox" name="<%=field.name%>" 
-				<%=readOnly != null ? "readonly" : "" %>
+				<%= readOnly ? "disabled" : "" %>
 				<%=field.selectedValues().contains(k) ? "checked" : "" %>
 				value="<%=k%>"><%=field.allValuesMap.get(k)%></label>
 		</div>

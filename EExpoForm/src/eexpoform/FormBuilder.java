@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,8 +22,10 @@ public class FormBuilder <E>{
 	
 	public  FormBase createForm(E entity){
 		List<FormFieldBase> formFieldList= new ArrayList<>();
-		Field[] fields = entity.getClass().getFields();
-		for (Field f : fields) {
+		ArrayList<Field> fieldList = new ArrayList<>();
+		fieldList.addAll(Arrays.asList(entity.getClass().getDeclaredFields()));
+		fieldList.addAll(Arrays.asList(entity.getClass().getFields()));
+		for (Field f : fieldList) {
 			FormFieldBase ffb = buildField(f, entity);
 			formFieldList.add(ffb); 
 		}
@@ -76,7 +79,7 @@ public class FormBuilder <E>{
 				
 			}
 		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-//			e.printStackTrace();
+			e.printStackTrace();
 		}
 		
 		if(f.getType().isEnum()){

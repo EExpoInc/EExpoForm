@@ -7,7 +7,7 @@ public class BlogPostEntity {
 	
 	
 	public enum Status{
-		draft, deleted, published, hid
+		draft, deleted, published, hided
 	}
 	
 	public int id;

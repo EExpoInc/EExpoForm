@@ -7,7 +7,7 @@
 		<label for="<%=field.id()%>"><%=field.label%></label>  
 		<input type="text" class="form-control" 
 				id="<%=field.id()%>"
-				<%=readOnly != null ? "readonly" : "" %> 
+				<%=readOnly ? "readonly" : "" %> 
 				value="<%=field.selectedValue()%>" name="<%=field.name%>">
 	</div>
 

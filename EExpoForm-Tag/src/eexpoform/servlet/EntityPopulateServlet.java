@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import jodd.bean.BeanUtil;
 import eexpoforms.test.BlogPostEntity;
-import eexpoforms.test.BlogPostForm; 
+import eexpoforms.test.BlogPostForm;
 
 @SuppressWarnings("serial")
 @WebServlet("/EntityPopulateServlet")

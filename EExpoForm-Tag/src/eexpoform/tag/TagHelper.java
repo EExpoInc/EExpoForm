@@ -8,6 +8,7 @@ import eexpoform.FormBuilder;
 import eexpoform.FormFieldBase;
 import eexpoform.field.BooleanValueField;
 import eexpoform.field.ChooseOneValueField;
+import eexpoform.field.DateValueField;
 import eexpoform.field.MultiValueField;
 import eexpoform.field.OpenValueField;
 
@@ -18,9 +19,24 @@ public class TagHelper {
 	Object bean;
 	int fieldIdx = 0;
 	
-	public enum OutputTag {
-		check, checkOne, combo, inputText, radio
+	public static enum ButtonBootstrapCssClass {
+		primary, success, info, warning, danger;
+		String toPrint = "btn btn-";
+		private ButtonBootstrapCssClass() {
+			this.toPrint += this.name();
+		}
+		
+		@Override
+		public String toString() {			
+			return this.toPrint;
+		}
 	}
+	
+	public enum OutputTag {
+		check, checkOne, combo, inputText, radio, date
+	}
+	
+	
 	
 	public TagHelper(Object bean, HttpServletRequest req, HttpServletResponse resp) {		
 		this.formBase = (new FormBuilder<Object>()).createForm(bean);
@@ -60,6 +76,8 @@ public class TagHelper {
 			
 		} else if (MultiValueField.class.isInstance(ffb)) {
 			result = OutputTag.check;
+		} else if (DateValueField.class.isInstance(ffb)) {
+			result = OutputTag.date;
 			
 		} else { //if (OpenMultiValueField.class.isInstance(ffb)) {
 			result = OutputTag.inputText;

@@ -12,7 +12,7 @@
 
 <div class="radio">
 	<label><input type="radio" name="<%=field.name%>" 
-		<%=readOnly != null ? "readonly" : "" %>
+		<%=readOnly ? "disabled" : "" %>
 		<%=(field.selectedValue().equals(k) ? "checked" : "" )%>
 		value="<%=k%>"><%=field.allValuesMap.get(k)%></label>
 </div>

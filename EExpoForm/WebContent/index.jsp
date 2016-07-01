@@ -15,6 +15,8 @@ if(entity == null){
 	entity = Main.genEntity();	
 }%>
 
+
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -27,12 +29,22 @@ if(entity == null){
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<title>Test Form</title>
 </head>
-<body>
+<body> 
+
 	<div class="container">
 		<div class="row">
 			<h3>Crud Filter</h3>
 		</div>
-		<ex:formBase bean="<%=entity%>" />
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<ex:formBase bean="<%=entity%>" readOnly="<%=true%>" action="~/Teste"/>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<ex:formBase bean="<%=entity%>"  action="~/Teste"/>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

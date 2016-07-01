@@ -7,7 +7,7 @@
 	<div class="checkbox">
 		<label><input type="checkbox" name="<%=field.name%>" 
 			<%=field.value? "checked" : "" %>
-			<%=readOnly != null ? "readonly" : "" %>
+			<%=readOnly ? "disabled" : "" %>
 			value="true"><%=field.label%></label>
 	</div>
 </div>

@@ -4,7 +4,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +15,7 @@ import java.util.Map;
 import eexpocrud.CrudfyUtils;
 import eexpoform.field.BooleanValueField;
 import eexpoform.field.ChooseOneValueField;
+import eexpoform.field.DateValueField;
 import eexpoform.field.MultiValueField;
 import eexpoform.field.OpenMultiValueField;
 import eexpoform.field.OpenValueField;
@@ -21,8 +25,35 @@ public class FormBuilder <E>{
 	
 	public  FormBase createForm(E entity){
 		List<FormFieldBase> formFieldList= new ArrayList<>();
-		Field[] fields = entity.getClass().getFields();
-		for (Field f : fields) {
+		ArrayList<Field> fieldList = new ArrayList<>();
+		ArrayList<Field> fieldResult = new ArrayList<>();
+		Map<String, Field> name_FieldMap = new HashMap<>();		
+//		ArrayList<String> fieldNameList = new ArrayList<>();
+		fieldList.addAll(Arrays.asList(entity.getClass().getDeclaredFields()));
+		
+		
+		
+
+		for(Field f:fieldList){
+			name_FieldMap.put(f.getName(), f);
+			fieldResult.add(f);
+		}
+
+//		fieldList.addAll(Arrays.asList(entity.getClass().getFields()));
+		fieldList  = new ArrayList<>(Arrays.asList(entity.getClass().getFields()));
+
+		for(Field f:fieldList){
+			if(!name_FieldMap.keySet().contains(f.getName())){
+				name_FieldMap.put(f.getName(), f);	
+				fieldResult.add(f);
+			}
+			
+		}
+
+		
+		
+//		fieldList = new ArrayList<>(name_FieldMap.values()); 
+		for (Field f : fieldResult) {
 			FormFieldBase ffb = buildField(f, entity);
 			formFieldList.add(ffb); 
 		}
@@ -46,10 +77,18 @@ public class FormBuilder <E>{
 		
 		FormFieldBase result = resolveFieldType(f, entity);
 		result.label = resolveLabel(f);
+//		result.readOnly = resolveReadOnly(f);
 		
 		return result;
 	}
 	
+
+//	private boolean resolveReadOnly(Field f) {
+//		if(CrudfyUtils.isIdField(f)){
+//			
+//		}
+//		return false;
+//	}
 
 	@SuppressWarnings("unchecked")
 	private LinkedHashMap<Object, String> resolveAllValues(Field f, E entity) {
@@ -113,6 +152,8 @@ public class FormBuilder <E>{
 				result = new OpenMultiValueField(f, selectedValues);
 			}else if(c.equals(Boolean.class)){
 				result = new BooleanValueField(f, resolveBooleanValue(selectedValues));
+			}else if(c.equals(Date.class)){
+				result = new DateValueField(f, resolveDateValue(selectedValues));
 			}else{ 
 				result = new OpenValueField(f, resolveOneValue(selectedValues));
 			}
@@ -150,6 +191,12 @@ public class FormBuilder <E>{
 	private Object resolveOneValue(List<Object> selectedValues) {
 		if(selectedValues.size() == 1){
 			return selectedValues.get(0);
+		}
+		return null;
+	}
+	private Date resolveDateValue(List<Object> selectedValues) {
+		if(selectedValues.size() == 1){
+			return (Date) selectedValues.get(0);
 		}
 		return null;
 	}

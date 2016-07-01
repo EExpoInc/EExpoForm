@@ -1,6 +1,7 @@
 package eexpoform;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 import eexpocrud.CrudfyUtils;
 
@@ -67,6 +68,7 @@ public class FormFieldBase {
 	public String label;
 	public String errMsg;
 	public String hint;
+	
 
 	
 //	private List<String> values; 
@@ -93,5 +95,21 @@ public class FormFieldBase {
 		this.ffcr.formField = this;
 		return this;
 	}
+	
+	/**
+	 * Se static final ou ID, so mostrar readOnly
+	 */
+	public boolean readOnly(){
+		if (CrudfyUtils.isIdField(this.originalBeanField)
+				|| Modifier.isFinal(this.originalBeanField.getModifiers())
+				|| Modifier.isStatic(this.originalBeanField.getModifiers())
+				|| Modifier.isTransient(this.originalBeanField.getModifiers())) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
 
 }

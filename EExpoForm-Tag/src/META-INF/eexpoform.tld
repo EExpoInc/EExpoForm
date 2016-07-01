@@ -9,7 +9,12 @@
 
 	<tag-file>
 		<name>inputText</name>
-		<path>/META-INF/tags/inputText.tag</path>
+		<path>/META-INF/tags/inputText.tag</path> 
+	</tag-file>
+	
+	<tag-file>
+		<name>inputDate</name>
+		<path>/META-INF/tags/inputDate.tag</path>
 	</tag-file>
 
 	<tag-file>

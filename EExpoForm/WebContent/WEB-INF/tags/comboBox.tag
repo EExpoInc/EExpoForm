@@ -6,7 +6,7 @@
 	
       <label for="<%=field.id()%>"><%=field.label%></label>
       <select class="form-control"
-      		<%=readOnly != null ? "readonly" : "" %> 
+      		<%= readOnly ? "disabled" : "" %> 
       		id="<%=field.id()%>" 
       		name="<%=field.name%>" >
 <%

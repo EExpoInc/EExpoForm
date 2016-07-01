@@ -8,8 +8,14 @@
 <%@tag import="eexpoform.tag.TagHelper"%>
 <%@tag import="eexpoform.FormBase"%>
 <%@tag language="java" pageEncoding="UTF-8"%>
-<%@ attribute name="bean" required="false" type="java.lang.Object"%>
-<%@taglib prefix="ex" uri="http://eexponews.com/eexpoform"%>
+<%@ attribute name="bean" required="true" type="java.lang.Object"%>
+<%@ attribute name="readOnly" required="false" type="java.lang.Boolean"%>
+<%@ attribute name="action" required="true" type="java.lang.String"%>
+
+<%@taglib prefix="ex" tagdir="/WEB-INF/tags"%>
+ 
+ 
+ <%readOnly = readOnly==null?false: readOnly;%>
  
  <style>
 div.group {
@@ -44,7 +50,7 @@ div.group div.checkbox label:HOVER, div.group div.radio label:HOVER{
  
 <!-- START EExpoFORM  -->
 <% TagHelper tagHelper = new TagHelper(bean, request, response); %>
-<form role="form" action="EntityPopulateServlet" method="post" accept-charset="UTF-8" >
+<form role="form" action="<%=action%>" method="post" accept-charset="UTF-8" >
 <%-- <form role="form" action="<%=tagHelper.formBase().action%>"> --%>
 
 <%while(tagHelper.hasNextField()){  
@@ -53,19 +59,19 @@ div.group div.checkbox label:HOVER, div.group div.radio label:HOVER{
 	System.out.println(ffb.originalBeanField); */
 	switch(TagHelper.analyseField(ffb)){
 		case check: 
-			%><ex:checkGroup field="<%=(MultiValueField) ffb %>"/> <% 
+			%><ex:checkGroup field="<%=(MultiValueField) ffb %>" readOnly="<%=readOnly%>"/> <% 
 			break;
 		case checkOne: 
-			%><ex:booleanCheck field="<%=(BooleanValueField) ffb %>"/> <% 
+			%><ex:booleanCheck field="<%=(BooleanValueField) ffb %>" readOnly="<%=readOnly%>"/> <% 
 			break;
 		case combo: 
-			%><ex:comboBox field="<%=(ChooseOneValueField) ffb %>"/> <%
+			%><ex:comboBox field="<%=(ChooseOneValueField) ffb %>" readOnly="<%=readOnly%>"/> <%
 			break;
 		case radio: 
-			%><ex:radioGroup field="<%=(ChooseOneValueField) ffb %>"/> <%
+			%><ex:radioGroup field="<%=(ChooseOneValueField) ffb %>" readOnly="<%=readOnly %>"/> <%
 			break;
 		case inputText: 
-			%><ex:inputText field="<%=(OpenValueField) ffb %>"/> <%
+			%><ex:inputText field="<%=(OpenValueField) ffb %>" readOnly="<%=readOnly %>"/> <%
 			break;
 		default:
 				break;
@@ -73,8 +79,9 @@ div.group div.checkbox label:HOVER, div.group div.radio label:HOVER{
 
 }%>
 
- 
+ <%if(!readOnly){ %>
  <button type="submit" class="btn btn-default"><%=tagHelper.formBase().confirmBtnLabel %></button>
+ <%} %>
  
 </form>
 <!-- END EExpoFORM  -->
