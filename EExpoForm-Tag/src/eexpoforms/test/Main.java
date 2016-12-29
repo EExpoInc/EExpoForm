@@ -19,7 +19,7 @@ public class Main {
 		BlogPostEntity bpf = genEntity();
 		
 		FormBuilder<BlogPostEntity> fb = new FormBuilder<BlogPostEntity>();
-		List<FormFieldBase> ffbs = fb.createForm(bpf).fieldList;
+		List<FormFieldBase> ffbs = fb.createForm(bpf, false).fieldList;
 		for (FormFieldBase ffb : ffbs) {
 //			getValue(ffb);
 

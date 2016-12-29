@@ -100,6 +100,10 @@ public class FormFieldBase {
 	 * Se static final ou ID, so mostrar readOnly
 	 */
 	public boolean readOnly(){
+		if(CrudfyUtils.isIdField(this.originalBeanField)){
+			
+		}
+		
 		if (CrudfyUtils.isIdField(this.originalBeanField)
 				|| Modifier.isFinal(this.originalBeanField.getModifiers())
 				|| Modifier.isStatic(this.originalBeanField.getModifiers())

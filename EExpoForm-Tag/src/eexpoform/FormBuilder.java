@@ -21,9 +21,11 @@ import eexpoform.field.OpenMultiValueField;
 import eexpoform.field.OpenValueField;
 
 public class FormBuilder <E>{
+	boolean editableIdOnCreate;
 	
-	
-	public  FormBase createForm(E entity){
+	public  FormBase createForm(E entity, boolean editableIdOnCreate){
+		this.editableIdOnCreate = editableIdOnCreate;
+		
 		List<FormFieldBase> formFieldList= new ArrayList<>();
 		ArrayList<Field> fieldList = new ArrayList<>();
 		ArrayList<Field> fieldResult = new ArrayList<>();

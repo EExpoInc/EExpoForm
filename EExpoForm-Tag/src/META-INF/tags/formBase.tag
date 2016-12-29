@@ -13,13 +13,16 @@
 <%@tag language="java" pageEncoding="UTF-8"%>
 <%@ attribute name="bean" required="true" type="java.lang.Object"%>
 <%@ attribute name="readOnly" required="false" type="java.lang.Boolean"%>
+<%@ attribute name="editableIdOnCreate" required="false" type="java.lang.Boolean"%>
 <%@ attribute name="action" required="true" type="java.lang.String"%>
 <%@ attribute name="btnCss" required="false" type="eexpoform.tag.TagHelper.ButtonBootstrapCssClass"%>
 
 <%@taglib prefix="ex" uri="http://eexponews.com/eexpoform"%>
  
  
- <%readOnly = readOnly==null?false: readOnly;
+ <%
+ editableIdOnCreate = editableIdOnCreate==null?false: editableIdOnCreate;
+ readOnly = readOnly==null?false: readOnly;
  btnCss = btnCss==null?ButtonBootstrapCssClass.success : btnCss;
  %>
  
@@ -54,18 +57,19 @@ div.group div.checkbox label:HOVER, div.group div.radio label:HOVER{
 
 </style>
   
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!--     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <link
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
 	rel="stylesheet">
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="./moment.min.js" charset="UTF-8"></script>
-<script type="text/javascript" src="./bootstrap-datetimepicker.js" charset="UTF-8"></script>
- <link href="./bootstrap-datetimepicker.css" rel="stylesheet" media="screen">
+ -->
+ 
+ 
+ 
  
  
 <!-- START EExpoFORM  -->
-<% TagHelper tagHelper = new TagHelper(bean, request, response); %>
+<% TagHelper tagHelper = new TagHelper(bean, request, response, editableIdOnCreate); %>
 <form role="form" action="<%=action%>" method="post" accept-charset="UTF-8"  enctype="application/x-www-form-urlencoded">
 <%-- <form role="form" action="<%=tagHelper.formBase().action%>"> --%> 
 
@@ -105,7 +109,7 @@ div.group div.checkbox label:HOVER, div.group div.radio label:HOVER{
  </div>
 
 	<script type="text/javascript">
-		$('.form_date').datetimepicker({format:"<%=CrudfyUtils.PATTERN_FULLDATE%>"});
+		$('.form_date').datetimepicker({format:"<%=CrudfyUtils.PATTERN_FULLDATE_JS%>"});
 	</script>
 
 

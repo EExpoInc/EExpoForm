@@ -38,10 +38,11 @@ public class TagHelper {
 	
 	
 	
-	public TagHelper(Object bean, HttpServletRequest req, HttpServletResponse resp) {		
-		this.formBase = (new FormBuilder<Object>()).createForm(bean);
+	public TagHelper(Object bean, HttpServletRequest req, HttpServletResponse resp, boolean editableIdOnCreate) {		
+		this.formBase = (new FormBuilder<Object>()).createForm(bean, editableIdOnCreate);
 		this.req = req;
 		this.resp = resp;
+		
 	}
 	
 	public FormBase formBase(){
