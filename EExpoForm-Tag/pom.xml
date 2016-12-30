@@ -27,12 +27,14 @@
 	</build>
 	<dependencies>
 
-		<!-- https://mvnrepository.com/artifact/org.jodd/jodd-bean -->
+
+
 		<dependency>
-			<groupId>org.jodd</groupId>
-			<artifactId>jodd-bean</artifactId>
-			<version>3.6.6</version>
+			<groupId>EExpoCrud</groupId>
+			<artifactId>EExpoCrud-Commons</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+
 
 	</dependencies>
 </project>
